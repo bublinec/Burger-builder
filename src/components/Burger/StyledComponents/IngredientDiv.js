@@ -1,8 +1,7 @@
 import styled from 'styled-components';
 
-
-const Ingredients = {
-    breadTop: styled.div`
+const IngredientsStyles = {
+    breadTop: `
         height: 20%;
         width: 80%;
         background: linear-gradient(#bc581e, #e27b36);
@@ -11,7 +10,7 @@ const Ingredients = {
         margin: 2% auto;
         position: relative;
     `,
-    breadBottom: styled.div`
+    breadBottom: `
         height: 13%;
         width: 80%;
         background: linear-gradient(#F08E4A, #e27b36);
@@ -20,7 +19,7 @@ const Ingredients = {
         margin: 2% auto;
     `,
 
-    meat: styled.div`
+    meat: `
         width: 80%;
         height: 8%;
         background: linear-gradient(#7f3608, #702e05);
@@ -28,7 +27,7 @@ const Ingredients = {
         border-radius: 15px;
     `,
 
-    salad: styled.div`
+    salad: `
         width: 85%;
         height: 7%;
         margin: 2% auto;
@@ -36,26 +35,23 @@ const Ingredients = {
         border-radius: 20px;
     `,
 
-    bacon: styled.div`
+    bacon: `
         width: 80%;
         height: 3%;
         background: linear-gradient(#bf3813, #c45e38);
         margin: 2% auto;
     `,
 
-    cheese: styled.div`
+    cheese: `
         width: 90%;
         height: 4.5%;
         margin: 2% auto;
         background: linear-gradient(#f4d004, #d6bb22);
         border-radius: 20px;
     `
-}
+};
 
-
-export default Ingredients;
-
-
+export default styled.div`${props => IngredientsStyles[props.type]}`;
 
 
 
