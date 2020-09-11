@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import Button from '../UI/Button';
 
 const OrderSummary = (props) => {
 
@@ -14,7 +15,6 @@ const OrderSummary = (props) => {
             )
         }
     }
-        
     let orderSummary;
 
     if(ingredientsList.length <= 0){
@@ -22,12 +22,15 @@ const OrderSummary = (props) => {
     }else{
         orderSummary = (
             <Fragment>
-                <h3>Your Order:</h3>
+                <h2>Your Order:</h2>
                 <p>A delicious burger with the following ingredients:</p>
                 <ul>
                     {ingredientsList}
                 </ul>
+                <h3>Price: {props.price.toFixed(2)} $</h3>
                 <p>Continue to checkout?</p>
+                <Button type='danger' onClick={props.hideModal}>CANCEL</Button>
+                <Button type='success' onClick={props.continuePurchase}>CONTINUE</Button>
             </Fragment>
         )
     }
