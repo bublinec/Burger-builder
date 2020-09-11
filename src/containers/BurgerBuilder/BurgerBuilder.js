@@ -1,6 +1,8 @@
 import React, {Component, Fragment} from 'react';
-import Burger from '../../components/Burger/Burger'
-import BuildControls from '../../components/BuildControls/BuildControlsPanel'
+import Burger from '../../components/Burger/Burger';
+import BuildControlsPanel from '../../components/BuildControls/BuildControlsPanel';
+import Modal from '../../components/UI/Modal';
+import OrderSummary from '../../components/OrderSummary/OrderSummary';
 
 const INGREDIENT_PRICES = {
     salad: 0.5,
@@ -17,7 +19,8 @@ class BurgerBuilder extends Component{
             meat: 1,
             bacon: 1
         },
-        totalPrice: 6
+        totalPrice: 6,
+        purchasing: false
     }
 
     addIngredientHandler = (type) => {
@@ -27,12 +30,43 @@ class BurgerBuilder extends Component{
         this.setState(newState);        
     }
 
+    removeIngredientHandler = (type) => {
+        const newState = {...this.state}
+        // prevent from negative ingredients count
+        if(newState.ingredients[type] <= 0){
+            return
+        }
+        newState.ingredients[type] -= 1;
+        newState.totalPrice -= INGREDIENT_PRICES[type];
+        this.setState(newState);        
+    }
+
+    showPurchaseModalHandler = () => {
+        this.setState({purchasing: true})
+    }
+
+    hidePurchaseModalHandler = () => {
+        this.setState({purchasing: false})
+    }
+
     render () {
+        const disabledInfo = {...this.state.ingredients};
+        for(let key in disabledInfo){
+            disabledInfo[key] = disabledInfo[key] <= 0;
+        }
+
         return (
             <Fragment>
+                <Modal show={this.state.purchasing} hideModal={this.hidePurchaseModalHandler}>
+                    <OrderSummary ingredients={this.state.ingredients}/>
+                </Modal>
                 <Burger ingredients={this.state.ingredients}/>
-                <BuildControls 
-                    addIngredient={this.addIngredientHandler}/>
+                <BuildControlsPanel 
+                    addIngredient={this.addIngredientHandler}
+                    removeIngredient={this.removeIngredientHandler}
+                    disabledInfor={disabledInfo}
+                    price={this.state.totalPrice}
+                    orderButtonClick={this.showPurchaseModalHandler}/>
             </Fragment>
             )
         }

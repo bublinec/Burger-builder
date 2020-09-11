@@ -18,6 +18,7 @@ const Button = styled.button`
     border: 1px solid #AA6817;
     cursor: pointer;
     outline: none;
+    ${props => props.disabled ? 'background-color: #C7C6C6; cursor: not-allowed; border: 1px solid #ccc; color: #888888;' : ''}
 `;
 
 const Label = styled.label`
@@ -30,7 +31,7 @@ const buildControl = (props) => {
     return(
         <BuildControlDiv>
             <Label>{props.label}</Label>
-            <Button type='less' >Less</Button>
+            <Button type='less' onClick={props.removeIngredient} disabled={props.disabled}>Less</Button>
             <Button type='more' onClick={props.addIngredient}>More</Button>
         </BuildControlDiv>
         )
