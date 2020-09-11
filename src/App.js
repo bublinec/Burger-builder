@@ -1,6 +1,8 @@
 import React from 'react';
-import BurgerBuilder from './containers/BurgerBuilder/BurgerBuilder';
 import styled from 'styled-components';
+
+import BurgerBuilder from './containers/BurgerBuilder/BurgerBuilder';
+import Toolbar from './components/Navigation/Toolbar'
 
 const StyledMain = styled.main`
   margin-top: 100px;
@@ -11,9 +13,9 @@ function App() {
     <div>
 
       {/* Navigation */}
-      <div>
-        Toolbar, Sidebar, Backdrop
-      </div>
+      <Toolbar>
+        
+      </Toolbar>
       
       {/* Content */}
       <StyledMain>
