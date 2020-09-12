@@ -2,7 +2,6 @@ import React, { Fragment } from 'react';
 import Button from '../UI/Button';
 
 const OrderSummary = (props) => {
-
     // Get the ingredients list 
     const ingredientsList = [];
     for(let key in props.ingredients){
@@ -15,8 +14,9 @@ const OrderSummary = (props) => {
             )
         }
     }
-    let orderSummary;
 
+    // Assign tex to the order summary
+    let orderSummary;
     if(ingredientsList.length <= 0){
         orderSummary = <h3>Do you really want to eat just a stale bread?</h3>    
     }else{

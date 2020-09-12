@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import styled from 'styled-components';
 import Backdrop from './Backdrop'
 
@@ -22,16 +22,23 @@ const ModalDiv = styled.div`
     }
 `;
 
-const modal = (props) => {
-    return (
-        <React.Fragment>
-            <Backdrop show={props.show} onClick={props.hideModal}/>
-            <ModalDiv show={props.show}>
-                {props.children}
-            </ModalDiv>
-        </React.Fragment>
+class Modal extends Component {
+    // Order Summary needs to be rerended only when modal is showing
+    shouldComponentUpdate(nextProps, nextState) {
+        return (nextProps.show !== this.props.show)
+    }
 
-     );
+    render () {
+        return (
+            <React.Fragment>
+                <Backdrop show={this.props.show} onClick={this.props.hideModal}/>
+                <ModalDiv show={this.props.show}>
+                    {this.props.children}
+                </ModalDiv>
+            </React.Fragment>
+    
+         );
+    }
 }
  
-export default modal;
+export default Modal;
