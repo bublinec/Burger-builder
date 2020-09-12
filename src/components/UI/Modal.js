@@ -25,7 +25,7 @@ const ModalDiv = styled.div`
 const modal = (props) => {
     return (
         <React.Fragment>
-            <Backdrop show={props.show} hideModal={props.hideModal}/>
+            <Backdrop show={props.show} onClick={props.hideModal}/>
             <ModalDiv show={props.show}>
                 {props.children}
             </ModalDiv>

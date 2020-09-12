@@ -12,7 +12,7 @@ const BackdropDiv = styled.div`
 `;
 
 const backdrop = (props) => (
-    props.show ? <BackdropDiv onClick={props.hideModal}></BackdropDiv> : null
+    props.show ? <BackdropDiv onClick={props.onClick}></BackdropDiv> : null
 )
  
 export default backdrop;

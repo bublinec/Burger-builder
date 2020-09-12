@@ -1,30 +1,46 @@
-import React from 'react';
+import React, { Component, Fragment } from 'react';
 import styled from 'styled-components';
 
 import BurgerBuilder from './containers/BurgerBuilder/BurgerBuilder';
-import Toolbar from './components/Navigation/Toolbar'
+import Toolbar from './components/Navigation/Toolbar';
+import SideDrawer from './components/Navigation/SideDrawer';
 
 const StyledMain = styled.main`
   margin-top: 100px;
 `;
 
-function App() {
-  return (
-    <div>
+class App extends Component {
+  state = {
+    showSideDrawer: true
+  };
 
+  showSideDrawerHandler = () => {
+    this.setState({
+      showSideDrawer: true
+    });
+  };
+
+  hideSideDrawerHandler = () => {
+    this.setState({
+      showSideDrawer: false
+    });
+  };
+
+  render () {
+    return(
+      <Fragment>
       {/* Navigation */}
-      <Toolbar>
-        
-      </Toolbar>
-      
+      <Toolbar showSideDrawer={this.showSideDrawerHandler}/>
+      <SideDrawer show={this.state.showSideDrawer} hideSideDrawer={this.hideSideDrawerHandler}/>
+
       {/* Content */}
       <StyledMain>
         <BurgerBuilder />
       </StyledMain>
-    
-    </div>
-    );
+    </Fragment>
+    )
   }
+}
   
   export default App;
   

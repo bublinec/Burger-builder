@@ -5,7 +5,7 @@ import BurgerLogoImg from '../../assets/images/burger-logo.png'
 const LogoDiv = styled.div`
   background-color: white;
   padding: 6px;
-  height: 50%;
+  height: ${props=> props.height};
   border-radius: 7px;
 `;
 
@@ -15,8 +15,10 @@ const LogoImg = styled.img`
 
 const logo = (props) => {
     return (
-        <LogoDiv>
-            <LogoImg src={BurgerLogoImg} alt="BurgerBuilder"></LogoImg>
+        <LogoDiv height={props.height}>
+            <LogoImg 
+              src={BurgerLogoImg} 
+              alt="BurgerBuilder"/>
         </LogoDiv>
     );
 }

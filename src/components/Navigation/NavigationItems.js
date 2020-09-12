@@ -3,12 +3,15 @@ import styled from 'styled-components';
 import NavigationItem from './NavigationItem'
 
 const NavigationItemsUl = styled.ul`
-    margin: 0;
+    margin: 35px 0 0 8px;
     padding: 0;
     list-style: none;
-    display: flex;
     align-items: center;
     height: 100%;
+    @media (min-width: 500px){
+        display: flex;
+        margin: 0;
+    }
 `;
 
 const navigationItems = (props) => {

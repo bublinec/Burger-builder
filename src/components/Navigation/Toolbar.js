@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import Logo from '../Logo/Logo';
-import NavigationItems from './NavigationItems'
+import NavigationItems from './NavigationItems';
+import HamburgerButton from '../UI/HamburgerButton';
 
 const ToolbarHeader = styled.header`
     height: 56px;
@@ -18,14 +19,28 @@ const ToolbarHeader = styled.header`
     z-index: 90;
 `;
 
+const DesktopOnlyDiv = styled.div`
+    @media (max-width: 499px){
+        display: none;
+    }
+`;
+
+const MobileOnlyDiv = styled.div`
+    @media (min-width: 500px){
+        display: none;
+    }
+`;
 
 const toolbar = (props) => {
     return (
         <ToolbarHeader>
-            <Logo></Logo>
-            <nav>
+            <Logo height="50%"></Logo>
+            <DesktopOnlyDiv>
                 <NavigationItems />
-            </nav>
+            </DesktopOnlyDiv>
+            <MobileOnlyDiv>
+                <HamburgerButton onClick={props.showSideDrawer}/>
+            </MobileOnlyDiv>
         </ToolbarHeader>
     );
 }

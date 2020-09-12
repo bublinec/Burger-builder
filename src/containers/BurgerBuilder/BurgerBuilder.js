@@ -38,7 +38,6 @@ class BurgerBuilder extends Component{
         }
         newState.ingredients[type] -= 1;
         newState.totalPrice -= INGREDIENT_PRICES[type];
-        newState.totalPrice = 
         this.setState(newState);        
     }
 
