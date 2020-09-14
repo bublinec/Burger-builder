@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 const themes = {
     success: '#5C9210',
-    danger: '#944317'
+    danger: '#800020'
 }
 
 const StyledButton = styled.button`

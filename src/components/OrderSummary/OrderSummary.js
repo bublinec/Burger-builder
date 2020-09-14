@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
 import Button from '../UI/Button';
+import Spinner from '../UI/Spinner';
 
 const OrderSummary = (props) => {
     // Get the ingredients list 
@@ -14,7 +15,7 @@ const OrderSummary = (props) => {
             )
         }
     }
-
+    
     // Assign tex to the order summary
     let orderSummary;
     if(ingredientsList.length <= 0){
@@ -33,6 +34,11 @@ const OrderSummary = (props) => {
                 <Button type='success' onClick={props.continuePurchase}>CONTINUE</Button>
             </Fragment>
         )
+    }
+
+    // Assign spinner if loading
+    if(props.loading){
+        orderSummary = <Spinner />
     }
 
     return orderSummary;

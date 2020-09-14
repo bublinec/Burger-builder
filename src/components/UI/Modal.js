@@ -25,7 +25,7 @@ const ModalDiv = styled.div`
 class Modal extends Component {
     // Order Summary needs to be rerended only when modal is showing
     shouldComponentUpdate(nextProps, nextState) {
-        return (nextProps.show !== this.props.show)
+        return (nextProps.show !== this.props.show || nextProps.children !== this.props.children)
     }
 
     render () {
