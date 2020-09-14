@@ -5,6 +5,7 @@ import BuildControlsPanel from '../../components/BuildControls/BuildControlsPane
 import Modal from '../../components/UI/Modal';
 import OrderSummary from '../../components/OrderSummary/OrderSummary';
 import withErrorHandler from '../../hoc/withErrorHandler';
+import Spinner from '../../components/UI/Spinner';
 
 const INGREDIENT_PRICES = {
     salad: 0.5,
@@ -15,12 +16,7 @@ const INGREDIENT_PRICES = {
 
 class BurgerBuilder extends Component{
     state = {
-        ingredients: {
-            salad: 1,
-            cheese: 1,
-            meat: 1,
-            bacon: 1
-        },
+        ingredients: null,
         totalPrice: 6,
         purchasing: false,
         loading: false,
@@ -66,12 +62,19 @@ class BurgerBuilder extends Component{
                 },
                 email: 'test@test.com'
             },
-            deliveryMethod: 'fastest'
+            deliveryMethod: 'fastest',
+            error: null,
         }
 
-        axios.post('/orders', order)
+        axios.post('/orders.json', order)
             .then(response => this.setState({loading:false, purchasing:false}))
             .catch(error => this.setState({loading:false, purchasing:false}))
+    }
+
+    componentDidMount = () => {
+        axios.get('https://burgerpub-b74df.firebaseio.com/ingredients.json')
+        .then(response => {this.setState({ingredients: response.data})})
+        .catch(error => {this.setState({error: error})})
     }
 
     render () {
@@ -79,6 +82,22 @@ class BurgerBuilder extends Component{
         for(let key in disabledInfo){
             disabledInfo[key] = disabledInfo[key] <= 0;
         }
+
+        // Assign burger when the ingredients data are fetched, or message when error
+        let burger = this.state.error ? <p>Sorry, can't load the ingredients</p> : <Spinner />;
+        if(this.state.ingredients){
+            burger = (
+            <Fragment>
+                <Burger ingredients={this.state.ingredients}/>
+                <BuildControlsPanel
+                    addIngredient={this.addIngredientHandler}
+                    removeIngredient={this.removeIngredientHandler}
+                    disabledInfor={disabledInfo}
+                    price={this.state.totalPrice}
+                    orderButtonClick={this.showPurchaseModalHandler}/>
+            </Fragment>
+            );
+        };
 
         return (
             <Fragment>
@@ -90,13 +109,7 @@ class BurgerBuilder extends Component{
                     price={this.state.totalPrice}
                     loading={this.state.loading}/>
                 </Modal>
-                <Burger ingredients={this.state.ingredients}/>
-                <BuildControlsPanel
-                    addIngredient={this.addIngredientHandler}
-                    removeIngredient={this.removeIngredientHandler}
-                    disabledInfor={disabledInfo}
-                    price={this.state.totalPrice}
-                    orderButtonClick={this.showPurchaseModalHandler}/>
+                {burger}
             </Fragment>
             )
         }
