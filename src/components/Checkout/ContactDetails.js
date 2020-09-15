@@ -36,8 +36,8 @@ class ContactDetails extends Component {
                     <Input type='text' name='email' placeholder='Your Email' />
                     <Input type='text' name='street' placeholder='Your Street' />
                     <Input type='text' name='postalCode' placeholder='Your Postal Code' />
-                    <Button type='success' onClick>ORDER</Button>
-                    <Button type="danger" onClick>CANCEL</Button>
+                    <Button type='success'>ORDER</Button>
+                    <Button type="danger">CANCEL</Button>
 
                 </ContactFrom>
             </div>

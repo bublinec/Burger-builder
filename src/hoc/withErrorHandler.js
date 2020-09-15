@@ -10,7 +10,7 @@ const withErrorHandler = (WrappedComponent, axios) => {
 
         }
 
-        componentWillMount() {
+        UNSAFE_componentWillMount() {
 
             // TO DO : fix this, + eject interceptors in componentWillUnmount
             // NEED TO SET THIS BEFORE componentDidMount() - WHERE SOULD I SET IT THEN?

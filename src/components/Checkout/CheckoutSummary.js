@@ -3,19 +3,16 @@ import styled from 'styled-components';
 import Burger from '../Burger/Burger';
 import Button from '../UI/Button';
 
-
-// const CheckoutSummaryDiv = styled.div`
-//   text-align: center;
-//   width: 80%;
-//   margin: 20px auto;
-//   @media (min-width: 800px) {
-//       width: 500px;
-//   }
-// `;
+const CheckoutSummaryDiv = styled.div`
+  text-align: center;
+  margin: 40px;
+  padding: 10px;
+  border: 2px solid grey;
+`;
 
 const CheckoutSummary = (props) => {
     return ( 
-        <div style={{textAlign: 'center', margin: '80px'}}>
+        <CheckoutSummaryDiv>
             <h1>You Burger:</h1>
             <div>
                 <Burger ingredients={props.ingredients}/>           
@@ -25,7 +22,7 @@ const CheckoutSummary = (props) => {
                 <Button type="success" onClick={props.checkoutContinueHandler}>CONTINUE</Button>
             </div>
             
-        </div>
+        </CheckoutSummaryDiv>
      );
 }
  

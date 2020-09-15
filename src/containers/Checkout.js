@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
 import CheckoutSummary from '../components/Checkout/CheckoutSummary';
 import ContactDetails from '../components/Checkout/ContactDetails';

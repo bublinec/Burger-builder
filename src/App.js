@@ -4,7 +4,7 @@ import BurgerBuilder from './containers/BurgerBuilder';
 import Toolbar from './components/Navigation/Toolbar';
 import SideDrawer from './components/Navigation/SideDrawer';
 import Checkout from './containers/Checkout';
-import { Route, Switch, Redirect} from 'react-router-dom'
+import { Route, Redirect} from 'react-router-dom'
 
 
 const StyledMain = styled.main`
