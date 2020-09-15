@@ -21,7 +21,7 @@ const CheckoutSummary = (props) => {
                 <Button type="danger" onClick={props.checkoutCancelHandler}>CANCEL</Button>
                 <Button type="success" onClick={props.checkoutContinueHandler}>CONTINUE</Button>
             </div>
-            
+
         </CheckoutSummaryDiv>
      );
 }

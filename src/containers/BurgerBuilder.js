@@ -3,7 +3,7 @@ import axios from '../axios-orders';
 import Burger from '../components/Burger/Burger';
 import BuildControlsPanel from '../components/BuildControls/BuildControlsPanel';
 import Modal from '../components/UI/Modal';
-import OrderSummary from '../components/OrderSummary/OrderSummary';
+import OrderSummary from '../components/Order/OrderSummary';
 import withErrorHandler from '../hoc/withErrorHandler';
 import Spinner from '../components/UI/Spinner';
 
@@ -49,33 +49,10 @@ class BurgerBuilder extends Component{
     }
 
     continuePurchaseHandler = () => {
-
         this.props.history.replace({
             pathname: 'checkout',
-            ingredients: this.state.ingredients});
-
-
-        // Post the order
-        // this.setState({loading:true});
-        // const order = {
-        //     ingredients: this.state.ingredients,
-        //     price: this.state.totalPrice,
-        //     customer: {
-        //         name: 'Peter Lauro',
-        //         address: {
-        //             street: 'Teststreet 1',
-        //             zipCode: '41351',
-        //             country: 'Germany'
-        //         },
-        //         email: 'test@test.com'
-        //     },
-        //     deliveryMethod: 'fastest',
-        //     error: null,
-        // }
-
-        // axios.post('/orders.json', order)
-        //     .then(response => this.setState({loading:false, purchasing:false}))
-        //     .catch(error => this.setState({loading:false, purchasing:false}))
+            ingredients: this.state.ingredients,
+            totalPrice: this.state.totalPrice});
     }
 
     componentDidMount = () => {

@@ -8,11 +8,15 @@ class Checkout extends Component {
     state = { 
         ingredients: {
             salad: 1 
-        }
+        },
+        totalPrice: 0
      }
 
-     componentDidMount() {
-         this.setState({ingredients: this.props.location.ingredients})
+     UNSAFE_componentWillMount() {
+         this.setState({
+            ingredients: this.props.location.ingredients,
+            totalPrice: this.props.location.totalPrice
+            })
      }
 
      checkoutCancelHandler = () => {
@@ -31,7 +35,13 @@ class Checkout extends Component {
                 <CheckoutSummary ingredients={this.state.ingredients}
                                 checkoutCancelHandler={this.checkoutCancelHandler}
                                 checkoutContinueHandler={this.checkoutContinueHandler}/>
-                <Route path={this.props.match.path + '/contact-details'} component={ContactDetails}/>
+                <Route 
+                    path={this.props.match.path + '/contact-details'} 
+                    render={(props) => (<ContactDetails 
+                                        ingredients={this.state.ingredients}
+                                        totalPrice={this.state.totalPrice}
+                                        {...props}/>)
+                    }/>
             
             </div>
             );

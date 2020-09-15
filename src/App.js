@@ -4,7 +4,8 @@ import BurgerBuilder from './containers/BurgerBuilder';
 import Toolbar from './components/Navigation/Toolbar';
 import SideDrawer from './components/Navigation/SideDrawer';
 import Checkout from './containers/Checkout';
-import { Route, Redirect} from 'react-router-dom'
+import { Route, Redirect, Switch} from 'react-router-dom'
+import Orders from './containers/Orders';
 
 
 const StyledMain = styled.main`
@@ -37,9 +38,12 @@ class App extends Component {
 
         {/* Content */}
         <StyledMain>
-          <Route path='/builder' component={BurgerBuilder}/>
-          <Route path='/checkout' component={Checkout}/> 
-          <Redirect from='/' to='/builder' />   
+          <Switch>
+            <Route path='/builder' component={BurgerBuilder}/>
+            <Route path='/checkout' component={Checkout}/> 
+            <Route path='/orders' component={Orders}/> 
+            <Redirect from='/' to='/builder' />   
+          </Switch>
         </StyledMain>
     </Fragment>
     )
