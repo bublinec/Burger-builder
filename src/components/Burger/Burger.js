@@ -5,6 +5,7 @@ import Ingredient from './IngredientStyling';
 const BurgerContainer = styled.div`
     width: 100%;
     margin: auto;
+    margin-top: 50px;
     height: 250px;
     overflow: auto;
     text-align: center;
@@ -23,7 +24,7 @@ const BurgerContainer = styled.div`
 
 @media (min-width: 1000px) and (min-height: 700px) {
     width: 700px;
-    height: 600px;
+    height: 450px;
 }
 `;
 

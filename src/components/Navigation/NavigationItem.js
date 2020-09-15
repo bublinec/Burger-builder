@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import {NavLink} from 'react-router-dom';
 
 const Li = styled.li`
     /* Mobile styles */
@@ -18,13 +19,13 @@ const Li = styled.li`
     }
 `;
 
-const A = styled.a`
+const LinkDiv = styled.div`
     /* Mobile styles */
     text-decoration: none;
     width: 100%;
     box-sizing: border-box;
     display: block;
-    color: ${props => props.active ? '#40A4C8' : '#8F5C2C'};
+    color: ${props => props.active ? '#40A4C8' : '#8F5C2C'} !important;
     &:hover, &:active{
         color: '#40A4C8';
     }
@@ -47,7 +48,13 @@ const A = styled.a`
 const navigationItem = (props) => {
     return (
         <Li>
-            <A href={props.href} active={props.active}>{props.children}</A>
+            <LinkDiv>
+                <NavLink 
+                    to={props.href} 
+                    active={props.active}>
+                        {props.children}
+                </NavLink>
+            </LinkDiv>
         </Li>
     );
 }
