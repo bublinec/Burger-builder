@@ -50,11 +50,11 @@ const buildControls = (props) => {
                 type={ctrl.type}
                 addIngredient={() => props.addIngredient(ctrl.type)}
                 removeIngredient={() => props.removeIngredient(ctrl.type)} 
-                disabled={props.disabledInfor[ctrl.type]}/>
+                disabled={props.disabledInfo[ctrl.type]}/>
                 ))}
             <OrderButton onClick={props.orderButtonClick}>ORDER NOW</OrderButton>
         </BuildControlsDiv>
     )
 }
         
-        export default buildControls;
+export default buildControls;

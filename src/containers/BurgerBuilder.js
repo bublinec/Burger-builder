@@ -1,44 +1,23 @@
-import React, {Component, Fragment} from 'react';
+// packages
+import React, { Component, Fragment } from 'react';
 import axios from '../axios-orders';
+import { connect } from 'react-redux';
+// components
 import Burger from '../components/Burger/Burger';
 import BuildControlsPanel from '../components/BuildControls/BuildControlsPanel';
 import Modal from '../components/UI/Modal';
 import OrderSummary from '../components/Order/OrderSummary';
 import withErrorHandler from '../hoc/withErrorHandler';
 import Spinner from '../components/UI/Spinner';
-
-const INGREDIENT_PRICES = {
-    salad: 0.5,
-    cheese: 0.4,
-    meat: 1.3,
-    bacon: 0.8
-};  
+// constants
+import * as actionTypes from '../store/actions';
 
 class BurgerBuilder extends Component{
+    // local state for UI
     state = {
-        ingredients: null,
-        totalPrice: 6,
         purchasing: false,
         loading: false,
         error: false
-    }
-
-    addIngredientHandler = (type) => {
-        const newState = {...this.state}
-        newState.ingredients[type] += 1;
-        newState.totalPrice += INGREDIENT_PRICES[type];
-        this.setState(newState);        
-    }
-
-    removeIngredientHandler = (type) => {
-        const newState = {...this.state}
-        // prevent from negative ingredients count
-        if(newState.ingredients[type] <= 0){
-            return
-        }
-        newState.ingredients[type] -= 1;
-        newState.totalPrice -= INGREDIENT_PRICES[type];
-        this.setState(newState);        
     }
 
     showPurchaseModalHandler = () => {
@@ -50,35 +29,33 @@ class BurgerBuilder extends Component{
     }
 
     continuePurchaseHandler = () => {
-        this.props.history.replace({
-            pathname: 'checkout',
-            ingredients: this.state.ingredients,
-            totalPrice: this.state.totalPrice});
+        this.props.history.replace('checkout');
     }
 
     componentDidMount = () => {
-        axios.get('https://burgerpub-b74df.firebaseio.com/ingredients.json')
-        .then(response => {this.setState({ingredients: response.data})})
-        .catch(error => {this.setState({error: error})})
+        // axios.get('https://burgerpub-b74df.firebaseio.com/ingredients.json')
+        // .then(response => {this.setState({ingredients: response.data})})
+        // .catch(error => {this.setState({error: error})})
     }
 
     render () {
-        const disabledInfo = {...this.state.ingredients};
+        const disabledInfo = {...this.props.ingredients};
         for(let key in disabledInfo){
             disabledInfo[key] = disabledInfo[key] <= 0;
         }
 
+        // I left here the server request for ingredients handling for later
         // Assign burger when the ingredients data are fetched, or message when error
         let burger = this.state.error ? <p>Sorry, can't load the ingredients</p> : <Spinner />;
-        if(this.state.ingredients){
+        if(this.props.ingredients){
             burger = (
             <Fragment>
-                <Burger ingredients={this.state.ingredients}/>
+                <Burger ingredients={this.props.ingredients}/>
                 <BuildControlsPanel
-                    addIngredient={this.addIngredientHandler}
-                    removeIngredient={this.removeIngredientHandler}
-                    disabledInfor={disabledInfo}
-                    price={this.state.totalPrice}
+                    addIngredient={this.props.addIngredientHandler}
+                    removeIngredient={this.props.removeIngredientHandler}
+                    price={this.props.totalPrice}
+                    disabledInfo={disabledInfo}
                     orderButtonClick={this.showPurchaseModalHandler}/>
             </Fragment>
             );
@@ -88,16 +65,26 @@ class BurgerBuilder extends Component{
             <Fragment>
                 <Modal show={this.state.purchasing} hideModal={this.hidePurchaseModalHandler}>
                     <OrderSummary 
-                    ingredients={this.state.ingredients} 
+                    ingredients={this.props.ingredients} 
                     hideModal={this.hidePurchaseModalHandler}
                     continuePurchase={this.continuePurchaseHandler}
-                    price={this.state.totalPrice}
+                    price={this.props.totalPrice}
                     loading={this.state.loading}/>
                 </Modal>
                 {burger}
             </Fragment>
             )
         }
-    }
-    
-    export default withErrorHandler(BurgerBuilder, axios);
+}
+
+const mapStateToProps = state => ({
+        ingredients: state.burger.ingredients,
+        totalPrice: state.burger.totalPrice
+ })
+
+const mapDispatchToProps = dispatch => ({
+        addIngredientHandler: (ingType) => dispatch({type: actionTypes.ADD_INGREDIENT, ingType: ingType}),
+        removeIngredientHandler: (ingType) => dispatch({type: actionTypes.REMOVE_INGREDIENT, ingType: ingType})
+})
+
+export default withErrorHandler(connect(mapStateToProps, mapDispatchToProps)(BurgerBuilder), axios);

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
 import axios from '../../axios-orders';
 import Button from '../UI/Button';
@@ -53,8 +54,8 @@ class ContactDetails extends Component {
                 value: '',
                 validation: {
                     required: true,
-                    minLength: 5,
-                    maxLength: 5,
+                    minLength: 6,
+                    maxLength: 6,
                     isNumeric: true
                 },
                 valid: false,
@@ -105,13 +106,14 @@ class ContactDetails extends Component {
     }
 
      checkInputValidity = (value, rules) => {
-        if (rules.required && value.trim() === '') {
+        const clearedValue = value.replace(/ /g,'');;
+        if (rules.required && clearedValue === '') {
             return false
         }
-        if (rules.maxLength && value.length > rules.maxLength) {
+        if (rules.maxLength && clearedValue.length > rules.maxLength) {
             return false
         }
-        if (rules.minLength && value.length < rules.minLength) {
+        if (rules.minLength && clearedValue.length < rules.minLength) {
             return false
         }
         return true;
@@ -184,6 +186,7 @@ class ContactDetails extends Component {
                 <h4>Enter your contact details</h4>
                 {formElementsArray.map(El => (
                     <Input
+                        key={El.id}
                         id={El.id}
                         {...El.config}
                         changed={this.inputChangedHandler}
@@ -201,5 +204,10 @@ class ContactDetails extends Component {
         return (form);
     }
 }
+
+const mapStateToProps = state => ({
+    ingredients: state.burger.ingredients,
+    totalPrice: state.burger.totalPrice
+})
  
-export default ContactDetails;
+export default connect(mapStateToProps)(ContactDetails);
