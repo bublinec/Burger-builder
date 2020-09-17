@@ -1,6 +1,5 @@
 import React, { Fragment } from 'react';
 import Button from '../UI/Button';
-import Spinner from '../UI/Spinner';
 
 const OrderSummary = (props) => {
         

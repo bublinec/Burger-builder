@@ -49,10 +49,8 @@ const navigationItem = (props) => {
     return (
         <Li>
             <LinkDiv>
-                <NavLink 
-                    to={props.href} 
-                    active={props.active}>
-                        {props.children}
+                <NavLink to={props.href} >
+                    {props.children}
                 </NavLink>
             </LinkDiv>
         </Li>

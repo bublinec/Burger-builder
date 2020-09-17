@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import styled from 'styled-components';
 import Order from '../components/Order/Order';
 import axios from '../axios-orders';
 

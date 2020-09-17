@@ -105,7 +105,7 @@ class ContactDetails extends Component {
     }
 
      checkInputValidity = (value, rules) => {
-        if (rules.required && value.trim() == '') {
+        if (rules.required && value.trim() === '') {
             return false
         }
         if (rules.maxLength && value.length > rules.maxLength) {
