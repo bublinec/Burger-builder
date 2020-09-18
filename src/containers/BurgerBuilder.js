@@ -9,15 +9,14 @@ import Modal from '../components/UI/Modal';
 import OrderSummary from '../components/Order/OrderSummary';
 import withErrorHandler from '../hoc/withErrorHandler';
 import Spinner from '../components/UI/Spinner';
-// constants
-import * as actionTypes from '../store/actions';
+// actions
+import * as actions from '../store/actions/index';
 
 class BurgerBuilder extends Component{
     // local state for UI
     state = {
         purchasing: false,
-        loading: false,
-        error: false
+        loading: false
     }
 
     showPurchaseModalHandler = () => {
@@ -33,20 +32,17 @@ class BurgerBuilder extends Component{
     }
 
     componentDidMount = () => {
-        // axios.get('https://burgerpub-b74df.firebaseio.com/ingredients.json')
-        // .then(response => {this.setState({ingredients: response.data})})
-        // .catch(error => {this.setState({error: error})})
+        this.props.initIngredients();
     }
 
     render () {
+        // disabledInfo for buttons
         const disabledInfo = {...this.props.ingredients};
         for(let key in disabledInfo){
             disabledInfo[key] = disabledInfo[key] <= 0;
         }
-
-        // I left here the server request for ingredients handling for later
-        // Assign burger when the ingredients data are fetched, or message when error
-        let burger = this.state.error ? <p>Sorry, can't load the ingredients</p> : <Spinner />;
+        // let burger be an error message, assign the burger component otherwise
+        let burger = this.props.error ? <p>Sorry, can't load the ingredients</p> : <Spinner />;
         if(this.props.ingredients){
             burger = (
             <Fragment>
@@ -79,12 +75,14 @@ class BurgerBuilder extends Component{
 
 const mapStateToProps = state => ({
         ingredients: state.burger.ingredients,
-        totalPrice: state.burger.totalPrice
+        totalPrice: state.burger.totalPrice,
+        error: state.burger.error,
  })
 
 const mapDispatchToProps = dispatch => ({
-        addIngredientHandler: (ingType) => dispatch({type: actionTypes.ADD_INGREDIENT, ingType: ingType}),
-        removeIngredientHandler: (ingType) => dispatch({type: actionTypes.REMOVE_INGREDIENT, ingType: ingType})
+        addIngredientHandler: (ingType) => dispatch(actions.addIngredient(ingType)),
+        removeIngredientHandler: (ingType) => dispatch(actions.removeIngredient(ingType)),
+        initIngredients: () => dispatch(actions.initIngredients()) 
 })
 
 export default withErrorHandler(connect(mapStateToProps, mapDispatchToProps)(BurgerBuilder), axios);
