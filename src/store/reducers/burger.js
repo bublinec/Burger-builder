@@ -1,4 +1,5 @@
 import * as actionTypes from '../actions/actionTypes';
+import { countObjectValues, updateObject } from '../utilities';
 
 // outsource maybe? 
 const INGREDIENT_PRICES = {
@@ -9,15 +10,7 @@ const INGREDIENT_PRICES = {
     cheese: 0.4
 };
 
-const getInitialPrice = (INGREDIENT_PRICES) => {
-    let initialPrice = 0;
-    for( let key in INGREDIENT_PRICES){
-        initialPrice += INGREDIENT_PRICES[key]
-    }
-    return initialPrice
-}
-
-const initialPrice = getInitialPrice(INGREDIENT_PRICES);
+const initialPrice = countObjectValues(INGREDIENT_PRICES);
 
 const initialState = {
     ingredients: null,
@@ -26,34 +19,24 @@ const initialState = {
 }
 
 const reducer = (state = initialState, action) => {
-    let newState = {...state}
     switch (action.type) {         
-        case actionTypes.ADD_INGREDIENT: {
-            let newIngs= {...newState.ingredients }
-            newIngs[action.ingType] += 1;
-            newState.ingredients = newIngs;
-            newState.totalPrice += INGREDIENT_PRICES[action.ingType];
-            break;
-        }   
-        case actionTypes.REMOVE_INGREDIENT: {
-            let newIngs= {...newState.ingredients}
-            newIngs[action.ingType] -= 1;
-            newState.ingredients = newIngs;
-            newState.totalPrice -= INGREDIENT_PRICES[action.ingType];
-            break;
-        }
+        case actionTypes.ADD_INGREDIENT: 
+            return updateObject(state, 
+                {ingredients: updateObject(state.ingredients, 
+                    {[state.ingredients[action.ingType]]: state.ingredients[action.ingType] + 1}),
+                totalPrice: (state.totalPrice += INGREDIENT_PRICES[action.ingType])})
+        case actionTypes.REMOVE_INGREDIENT:
+            return updateObject(state, 
+                {ingredients: updateObject(state.ingredients, 
+                    {[state.ingredients[action.ingType]]: state.ingredients[action.ingType] - 1}),
+                totalPrice: (state.totalPrice -= INGREDIENT_PRICES[action.ingType])});
         case actionTypes.SET_INGREDIENTS:
-            newState.ingredients = action.ingredients;
-            newState.totalPrice = initialPrice;
-            newState.error = false;
-            break;
+            return updateObject(state, {ingredients: action.ingredients, totalPrice: initialPrice, error: false});
         case actionTypes.FETCH_INGREDIENTS_FAIL:
-            newState.error = true;
-            break;
+            return updateObject(state, {error: true});
         default:
-            break;
+            return state;
     }
-    return newState;
 }
  
 export default reducer;

@@ -1,4 +1,5 @@
 import * as actionTypes from '../actions/actionTypes';
+import { updateObject } from '../utilities';
 
 // saving also error, although not using it (can be useful in the future)
 const initialState = { 
@@ -8,39 +9,24 @@ const initialState = {
 }
 
 const reducer = (state = initialState, action) => {
-    let newState = {
-        ...state
-    }
-
     switch (action.type) {
         // purchase
         case actionTypes.PURCHASE_BURGER_START:
-            newState.loading = true;
-            break;
+            return updateObject(state, {loading: true});
         case actionTypes.PURCHASE_BURGER_SUCCESS:
-            newState.loading = false;
-            newState.orders = state.orders.concat(action.order)
-            break;
+            return updateObject(state, {loading: false, orders: state.orders.concat(action.order)})
         case actionTypes.PURCHASE_BURGER_FAIL:
-            newState.loading = false;
-            newState.error = action.error;
-            break;
+            return updateObject(state, {loading: false, error: action.error});
         // orders list
         case actionTypes.FETCH_ORDERS_START:
-            newState.loading = true
-            break;
+            return updateObject(state, {loading: true})
         case actionTypes.FETCH_ORDERS_SUCCESS:
-            newState.loading = false;
-            newState.orders = action.orders;
-            break;
+            return updateObject(state, {loading: false, orders: action.orders})
         case actionTypes.FETCH_ORDERS_FAIL:
-            newState.loading = false;
-            newState.error = action.error;
-            break;
+            return updateObject(state, {loading: false, error: action.error})
         default:
-            break;
+            return state;
     }
-    return newState;
 }
 
 export default reducer;
