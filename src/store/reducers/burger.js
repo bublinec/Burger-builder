@@ -2,15 +2,26 @@ import * as actionTypes from '../actions/actionTypes';
 
 // outsource maybe? 
 const INGREDIENT_PRICES = {
-    salad: 0.5,
-    cheese: 0.4,
+    bread: 3,
     meat: 1.3,
-    bacon: 0.8
+    bacon: 0.8,
+    salad: 0.5,
+    cheese: 0.4
 };
+
+const getInitialPrice = (INGREDIENT_PRICES) => {
+    let initialPrice = 0;
+    for( let key in INGREDIENT_PRICES){
+        initialPrice += INGREDIENT_PRICES[key]
+    }
+    return initialPrice
+}
+
+const initialPrice = getInitialPrice(INGREDIENT_PRICES);
 
 const initialState = {
     ingredients: null,
-    totalPrice: 6,
+    totalPrice: initialPrice,
     error: false
 }
 
@@ -35,6 +46,7 @@ const reducer = (state = initialState, action) => {
 
         case actionTypes.SET_INGREDIENTS:
             newState.ingredients = action.ingredients;
+            newState.totalPrice = initialPrice;
             newState.error = false;
             return newState;
         case actionTypes.FETCH_INGREDIENTS_FAILED:

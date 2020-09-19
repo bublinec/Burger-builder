@@ -30,7 +30,7 @@ export const fetchIngredientsFailed = () => {
 
 export const initIngredients = () => {
     // syntax avalaible due to redux-thunk
-    // stop take the dispatch function as an argument, 
+    // take the dispatch function as an argument, stop it, 
     // fetch the data, call the dispatch once the response is resolved
     // alternatively, the data could be also fetch in componentDidMount()
     return dispatch => {

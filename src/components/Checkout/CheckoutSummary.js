@@ -13,15 +13,14 @@ const CheckoutSummaryDiv = styled.div`
 const CheckoutSummary = (props) => {
     return ( 
         <CheckoutSummaryDiv>
-            <h1>You Burger:</h1>
+            <h1>So that's your Burger, is it all right?</h1>
             <div>
                 <Burger ingredients={props.ingredients}/>           
             </div>
             <div>
-                <Button type="danger" onClick={props.checkoutCancelHandler}>CANCEL</Button>
-                <Button type="success" onClick={props.checkoutContinueHandler}>CONTINUE</Button>
+                <Button type="danger" onClick={props.checkoutCancelHandler}>NOT SURE</Button>
+                <Button type="success" onClick={props.checkoutContinueHandler}>LOOKS GOOD, GO ON!</Button>
             </div>
-
         </CheckoutSummaryDiv>
      );
 }

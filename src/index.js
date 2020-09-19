@@ -10,10 +10,12 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 // reducers
-import burgerReducer from './store/reducers/burger';
+import burger from './store/reducers/burger';
+import order from './store/reducers/order';
 
 const rootReducer = combineReducers({
-  burger: burgerReducer,
+  burger: burger,
+  order: order
 })
 
 // redux DevTools setup

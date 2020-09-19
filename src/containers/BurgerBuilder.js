@@ -33,15 +33,15 @@ class BurgerBuilder extends Component{
 
     componentDidMount = () => {
         this.props.initIngredients();
-    }
+    }    
 
     render () {
-        // disabledInfo for buttons
+        // get disabledInfo for buttons
         const disabledInfo = {...this.props.ingredients};
         for(let key in disabledInfo){
             disabledInfo[key] = disabledInfo[key] <= 0;
         }
-        // let burger be an error message, assign the burger component otherwise
+        // let burger be an error message if there is one, otherwise assign burger a component
         let burger = this.props.error ? <p>Sorry, can't load the ingredients</p> : <Spinner />;
         if(this.props.ingredients){
             burger = (
