@@ -49,7 +49,7 @@ const reducer = (state = initialState, action) => {
             newState.totalPrice = initialPrice;
             newState.error = false;
             return newState;
-        case actionTypes.FETCH_INGREDIENTS_FAILED:
+        case actionTypes.FETCH_INGREDIENTS_FAIL:
             newState.error = true;
             return newState
         default:
