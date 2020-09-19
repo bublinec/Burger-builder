@@ -33,28 +33,27 @@ const reducer = (state = initialState, action) => {
             newIngs[action.ingType] += 1;
             newState.ingredients = newIngs;
             newState.totalPrice += INGREDIENT_PRICES[action.ingType];
-            return newState;
-        }
-            
+            break;
+        }   
         case actionTypes.REMOVE_INGREDIENT: {
             let newIngs= {...newState.ingredients}
             newIngs[action.ingType] -= 1;
             newState.ingredients = newIngs;
             newState.totalPrice -= INGREDIENT_PRICES[action.ingType];
-            return newState;
+            break;
         }
-
         case actionTypes.SET_INGREDIENTS:
             newState.ingredients = action.ingredients;
             newState.totalPrice = initialPrice;
             newState.error = false;
-            return newState;
+            break;
         case actionTypes.FETCH_INGREDIENTS_FAIL:
             newState.error = true;
-            return newState
+            break;
         default:
-            return newState;
+            break;
     }
+    return newState;
 }
  
 export default reducer;
