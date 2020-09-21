@@ -8,7 +8,6 @@ const Li = styled.li`
     box-sizing: border-box;
     display: block;
     width: 100%;
-    
     /* Desktop styles */
     @media (min-width: 500px) {
         margin: 0;
@@ -25,7 +24,7 @@ const LinkDiv = styled.div`
     width: 100%;
     box-sizing: border-box;
     display: block;
-    color: ${props => props.active ? '#40A4C8' : '#8F5C2C'} !important;
+    color: ${props => props.active ? '#40A4C8' : '#8F5C2C'};
     &:hover, &:active{
         color: '#40A4C8';
     }
@@ -35,9 +34,7 @@ const LinkDiv = styled.div`
         color: white;
         height: 100%;
         padding: 16px 10px;
-        border-bottom: 4px solid transparent;
-        background-color: ${props => props.active ? '#8F5C2C' : 'none'};
-        border-bottom: ${props => props.active ? '4px solid #40A4C8' : 'none'};
+        border-bottom: 4px solid transparent;    
         &:hover, &:active{
         background-color: #8F5C2C;
         border-bottom: 4px solid #40A4C8;
@@ -45,14 +42,22 @@ const LinkDiv = styled.div`
     }
 `;
 
+
 const navigationItem = (props) => {
+    // define inline style (on order to override NavLink anchor style)
+    // TO DO: FIX THIS, FIX ACTIVE LINK STYLE
+    const style = {
+        textDecoration: 'none',
+        backgroundColor: props.active ? '#8F5C2C' : 'none',
+        // borderBottom: props.active ? '4px solid #40A4C8' : 'none'
+    }
     return (
         <Li>
-            <LinkDiv>
-                <NavLink to={props.href} >
-                    {props.children}
-                </NavLink>
-            </LinkDiv>
+            <NavLink to={props.href} style={style}>
+                <LinkDiv>
+                        {props.children}
+                </LinkDiv>
+            </NavLink>
         </Li>
     );
 }

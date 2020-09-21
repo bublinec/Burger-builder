@@ -19,8 +19,13 @@ class BurgerBuilder extends Component{
         loading: false
     }
 
-    showPurchaseModalHandler = () => {
-        this.setState({purchasing: true})
+    orderButtonHandler = () => {
+        if(this.props.isAuthenticated){
+            this.setState({purchasing: true})
+        }else {
+            this.props.setAuthRedirectUrl('/checkout')
+            this.props.history.push('/auth');
+        }
     }
 
     hidePurchaseModalHandler = () => {
@@ -28,7 +33,8 @@ class BurgerBuilder extends Component{
     }
 
     continuePurchaseHandler = () => {
-        this.props.history.replace('checkout');
+        this.props.history.replace('/checkout');
+
     }
 
     componentDidMount = () => {
@@ -52,20 +58,20 @@ class BurgerBuilder extends Component{
                     removeIngredient={this.props.removeIngredientHandler}
                     price={this.props.totalPrice}
                     disabledInfo={disabledInfo}
-                    orderButtonClick={this.showPurchaseModalHandler}/>
+                    orderButtonClick={this.orderButtonHandler}
+                    isAuthenticated={this.props.isAuthenticated}/>
             </Fragment>
             );
         };
-
         return (
             <Fragment>
                 <Modal show={this.state.purchasing} hideModal={this.hidePurchaseModalHandler}>
                     <OrderSummary 
-                    ingredients={this.props.ingredients} 
-                    hideModal={this.hidePurchaseModalHandler}
-                    continuePurchase={this.continuePurchaseHandler}
-                    price={this.props.totalPrice}
-                    loading={this.state.loading}/>
+                        ingredients={this.props.ingredients} 
+                        hideModal={this.hidePurchaseModalHandler}
+                        continuePurchase={this.continuePurchaseHandler}
+                        price={this.props.totalPrice}
+                        loading={this.state.loading}/>
                 </Modal>
                 {burger}
             </Fragment>
@@ -77,12 +83,14 @@ const mapStateToProps = state => ({
         ingredients: state.burger.ingredients,
         totalPrice: state.burger.totalPrice,
         error: state.burger.error,
+        isAuthenticated: state.auth.token !== null
  })
 
 const mapDispatchToProps = dispatch => ({
         addIngredientHandler: (ingType) => dispatch(actions.addIngredient(ingType)),
         removeIngredientHandler: (ingType) => dispatch(actions.removeIngredient(ingType)),
-        initIngredients: () => dispatch(actions.initIngredients()) 
+        initIngredients: () => dispatch(actions.initIngredients()),
+        setAuthRedirectUrl: (authRedirectUrl) => dispatch(actions.setAuthRedirectUrl(authRedirectUrl))
 })
 
 export default withErrorHandler(connect(mapStateToProps, mapDispatchToProps)(BurgerBuilder), axios);

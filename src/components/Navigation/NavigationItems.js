@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import styled from 'styled-components';
 import NavigationItem from './NavigationItem'
 
@@ -14,14 +14,21 @@ const NavigationItemsUl = styled.ul`
     }
 `;
 
+
 const navigationItems = (props) => {
     return (
         <NavigationItemsUl>
-            <NavigationItem href='/builder' active>Builder</NavigationItem>
-            <NavigationItem href='/orders'>Orders</NavigationItem>
-            <NavigationItem href='/about'>About</NavigationItem>
+            <NavigationItem href='/builder'>Builder</NavigationItem>
+            {props.isAuthenticated
+             ? <Fragment>
+                    <NavigationItem href='/orders'>Orders</NavigationItem>
+                    <NavigationItem href='/logout'>Log out</NavigationItem>
+               </Fragment>
+             : <NavigationItem href='/auth'>Sign up</NavigationItem>}
+            {/* <NavigationItem href='/about'>About</NavigationItem> */}
         </NavigationItemsUl>
     );
 }
- 
+
+
 export default navigationItems;

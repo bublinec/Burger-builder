@@ -31,7 +31,10 @@ const reducer = (state = initialState, action) => {
                     {[state.ingredients[action.ingType]]: state.ingredients[action.ingType] - 1}),
                 totalPrice: (state.totalPrice -= INGREDIENT_PRICES[action.ingType])});
         case actionTypes.SET_INGREDIENTS:
-            return updateObject(state, {ingredients: action.ingredients, totalPrice: initialPrice, error: false});
+            return updateObject(state, {
+                ingredients: action.ingredients,
+                totalPrice: initialPrice,
+                error: false});
         case actionTypes.FETCH_INGREDIENTS_FAIL:
             return updateObject(state, {error: true});
         default:

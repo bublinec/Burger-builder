@@ -13,7 +13,7 @@ class Orders extends Component {
     // but it's a good practice
 
     componentDidMount() {
-        this.props.fetchOrders();
+        this.props.fetchOrders(this.props.token);
     }
 
     render() {
@@ -36,11 +36,12 @@ class Orders extends Component {
 
 const mapStateToProps = state => ({
     orders: state.order.orders,
-    loading: state.order.loading
+    loading: state.order.loading,
+    token: state.auth.token
 });
 
 const mapDispatchToProps = dispatch => ({
-    fetchOrders: () => dispatch(actions.fetchOrders())
+    fetchOrders: (token) => dispatch(actions.fetchOrders(token))
 });
  
 export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(Orders, axios));

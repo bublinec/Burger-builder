@@ -5,16 +5,17 @@ import axios from '../axios-orders';
 import withErrorHandler from '../hoc/withErrorHandler';
 import Button from '../components/UI/Button';
 import Spinner from '../components/UI/Spinner';
-import Input from '../components/Checkout/Input';
+import Input from '../components/UI/Input';
 import * as actions from '../store/actions/index';
 
 
-const ContactFrom = styled.form`
+const Form = styled.form`
   margin: 40px auto;
   text-align: center;
   border: 2px solid grey;
   padding: 10px;
-  width: 50%;
+  width: 90%;
+  max-width: 700px;
 `;
 
 class ContactDetails extends Component {
@@ -162,13 +163,12 @@ class ContactDetails extends Component {
             price: this.props.totalPrice,
             formData: formData
         }
-        this.props.purchaseBurger(order, this.props.history.push);
+        this.props.purchaseBurger(order, this.props.history.push, this.props.token);
      }
 
 
      cancelOrderHandler = () => {
         this.props.history.replace('/');
-        this.props.resetPrice();
      }
 
     render() { 
@@ -182,7 +182,7 @@ class ContactDetails extends Component {
         }
         
         let form = (
-            <ContactFrom onSubmit={this.postOrderHandler}>
+            <Form onSubmit={this.postOrderHandler}>
                 <h4>Enter your contact details please:</h4>
                 {formElementsArray.map(El => (
                     <Input
@@ -195,7 +195,7 @@ class ContactDetails extends Component {
                 }
                 <Button type="danger" onClick={this.cancelOrderHandler}>CANCEL</Button>
                 <Button type='success' disabled={!this.state.formIsValid}>ORDER</Button>
-            </ContactFrom>
+            </Form>
         )
         
         if(this.props.loading){
@@ -208,11 +208,12 @@ class ContactDetails extends Component {
 const mapStateToProps = state => ({
     ingredients: state.burger.ingredients,
     totalPrice: state.burger.totalPrice,
-    loading: state.order.loading
+    loading: state.order.loading,
+    token: state.auth.token
 })
 
 const mapDispatchToProps = dispatch => ({
-    purchaseBurger: (order, push) => dispatch(actions.purchaseBurger(order, push)),
+    purchaseBurger: (order, push, token) => dispatch(actions.purchaseBurger(order, push, token)),
 })
  
 export default withErrorHandler(connect(mapStateToProps, mapDispatchToProps)(ContactDetails), axios);

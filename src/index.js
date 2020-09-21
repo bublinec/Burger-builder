@@ -12,10 +12,12 @@ import * as serviceWorker from './serviceWorker';
 // reducers
 import burger from './store/reducers/burger';
 import order from './store/reducers/order';
+import auth from './store/reducers/auth';
 
 const rootReducer = combineReducers({
   burger: burger,
-  order: order
+  order: order,
+  auth: auth
 })
 
 // redux DevTools setup

@@ -36,7 +36,7 @@ const toolbar = (props) => {
         <ToolbarHeader>
             <Logo height="50%"></Logo>
             <DesktopOnlyDiv>
-                <NavigationItems />
+                <NavigationItems isAuthenticated={props.isAuthenticated}/>
             </DesktopOnlyDiv>
             <MobileOnlyDiv>
                 <HamburgerButton onClick={props.showSideDrawer}/>

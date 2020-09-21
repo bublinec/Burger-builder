@@ -38,7 +38,6 @@ const controls = [
     { label: 'Meat', type: 'meat' },
 ];
 const buildControls = (props) => {
-
     return(
         <BuildControlsDiv>
             <h2>Price {props.price.toFixed(2)}$</h2>
@@ -52,7 +51,7 @@ const buildControls = (props) => {
                 removeIngredient={() => props.removeIngredient(ctrl.type)} 
                 disabled={props.disabledInfo[ctrl.type]}/>
                 ))}
-            <OrderButton onClick={props.orderButtonClick}>ORDER NOW</OrderButton>
+            <OrderButton onClick={props.orderButtonClick}>{props.isAuthenticated ? 'ORDER' : 'SIGN UP TO ORDER'}</OrderButton>
         </BuildControlsDiv>
     )
 }
