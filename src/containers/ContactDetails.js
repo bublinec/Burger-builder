@@ -159,6 +159,7 @@ class ContactDetails extends Component {
             formData[key] = this.state.orderForm[key].value;
         }
         const order = {
+            userId: this.props.userId,
             ingredients: this.props.ingredients,
             price: this.props.totalPrice,
             formData: formData
@@ -209,7 +210,8 @@ const mapStateToProps = state => ({
     ingredients: state.burger.ingredients,
     totalPrice: state.burger.totalPrice,
     loading: state.order.loading,
-    token: state.auth.token
+    token: state.auth.token,
+    userId: state.auth.userId
 })
 
 const mapDispatchToProps = dispatch => ({

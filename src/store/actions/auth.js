@@ -17,7 +17,6 @@ export const authFail = (error) => ({
 });
 
 export const logout = () => {
-    console.log('logout'); 
     localStorage.removeItem('token');
     localStorage.removeItem('userId');
     localStorage.removeItem('expirationDate');
@@ -77,7 +76,7 @@ export const auth = (email, password, isSignup, push, authRedirectUrl) => {
 
 export const tryAutoLogin = () => {
     return dispatch => {
-        const token = localStorage.getItem('token');
+        const token = localStorage.getItem('token');    
         if (token){
             const expirationDate = new Date(localStorage.getItem('expirationDate'));
             const currentDate = new Date();

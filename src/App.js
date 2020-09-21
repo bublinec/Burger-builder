@@ -41,6 +41,29 @@ class App extends Component {
   };
 
   render () {
+    // Guarding routes
+    let routes = (
+      <Switch>
+        <Route path='/builder' component={BurgerBuilder}/>
+        <Route path='/auth' component={Auth}/> 
+        <Redirect from='/' to='/builder' />   
+      </Switch>
+
+    )
+
+    if (this.props.isAuthenticated) {
+      routes = (
+        <Switch>
+          <Route path='/builder' component={BurgerBuilder}/>
+          <Route path='/checkout' exact component={Checkout}/> 
+          <Route path='/contact-details' component={ContactDetails}/>
+          <Route path='/orders' component={Orders}/> 
+          <Route path='/logout' component={Logout}/> 
+          <Redirect from='/' to='/builder' />   
+      </Switch>
+      )
+    }
+
     return(
       <Fragment>
         {/* Navigation */}
@@ -49,18 +72,9 @@ class App extends Component {
           show={this.state.showSideDrawer} 
           hideSideDrawer={this.hideSideDrawerHandler}
           isAuthenticated={this.props.isAuthenticated}/>
-
         {/* Content */}
         <StyledMain>
-          <Switch>
-            <Route path='/builder' component={BurgerBuilder}/>
-            <Route path='/checkout' exact component={Checkout}/> 
-            <Route path='/contact-details' component={ContactDetails}/>
-            <Route path='/orders' component={Orders}/> 
-            <Route path='/auth' component={Auth}/> 
-            <Route path='/logout' component={Logout}/> 
-            <Redirect from='/' to='/builder' />   
-          </Switch>
+          {routes}
         </StyledMain>
     </Fragment>
     )
