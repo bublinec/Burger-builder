@@ -13,8 +13,6 @@ export const removeIngredient = (ingType) => {
         ingType: ingType}
 }
 
-
-// INITIALIZE INGREDIENTS
 export const setIngredients = (ingredients) => {
     return {
         type: actionTypes.SET_INGREDIENTS,
@@ -29,10 +27,6 @@ export const fetchIngredientsFailed = () => {
 }
 
 export const initIngredients = () => {
-    // syntax avalaible due to redux-thunk
-    // take the dispatch function as an argument, stop it, 
-    // fetch the data, call the dispatch once the response is resolved
-    // alternatively, the data could be also fetch in componentDidMount()
     return dispatch => {
         axios.get('https://burgerpub-b74df.firebaseio.com/ingredients.json')
             .then(response => {dispatch(setIngredients(response.data))})

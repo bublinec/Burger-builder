@@ -14,7 +14,7 @@ class Checkout extends Component {
     }
 
     render() { 
-        // avoid loading the checkout page on startup, when there is no ingredients (no burgerer)
+        // avoid loading the checkout page on startup, when there are no ingredients (no burgerer)
         // which would lead to error (looping through null)
         // doesn't make sense to be on checkout without burger, therefore redirect
         let summary = <Redirect to='/'/>

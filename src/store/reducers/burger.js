@@ -1,5 +1,5 @@
 import * as actionTypes from '../actions/actionTypes';
-import { countObjectValues, updateObject } from '../utilities';
+import { updateObject, countObjectValues } from '../../shared/utilities';
 
 // outsource maybe? 
 const INGREDIENT_PRICES = {

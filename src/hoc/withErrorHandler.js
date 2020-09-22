@@ -6,8 +6,6 @@ const withErrorHandler = (WrappedComponent, axios) => {
         constructor(props) {
             super(props)
             this.state = {error:null};
-
-
         }
 
         UNSAFE_componentWillMount() {

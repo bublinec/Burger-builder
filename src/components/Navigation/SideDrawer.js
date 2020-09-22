@@ -30,7 +30,9 @@ const sideDrawer = (props) => {
             <Backdrop show={props.show} onClick={props.hideSideDrawer}/>
             <SideDrawerDiv show={props.show}>
                 <Logo height="6%"/>
-                <NavigationItems isAuthenticated={props.isAuthenticated}/>
+                <div onClick={props.hideSideDrawer}> 
+                    <NavigationItems isAuthenticated={props.isAuthenticated}/>
+                </div>
             </SideDrawerDiv>
         </Fragment>
 

@@ -7,6 +7,7 @@ import Button from '../components/UI/Button';
 import Spinner from '../components/UI/Spinner';
 import Input from '../components/UI/Input';
 import * as actions from '../store/actions/index';
+import { updateObject, checkInputValidity, checkFormValidity } from '../shared/utilities';
 
 
 const Form = styled.form`
@@ -110,48 +111,21 @@ class ContactDetails extends Component {
 
 
     inputChangedHandler = (event, id) => {
-        // deep clone 
-        const updatedOrderForm = {
-             ...this.state.orderForm
-        };
-        const updatedFormElement = {
-            ...updatedOrderForm[id]
-        };
-        updatedFormElement.value = event.target.value;
-        updatedFormElement.valid = this.checkInputValidity(updatedFormElement.value, updatedFormElement.validation);
-        updatedFormElement.touched = true;
-        updatedOrderForm[id] = updatedFormElement;
-        const formValidity = this.checkFormValidity(updatedOrderForm);
+        const form = this.state.orderForm;
+        const updatedOrderForm = updateObject(form, {
+            [id]: updateObject(form[id], {
+                value: event.target.value,
+                valid: checkInputValidity(event.target.value, form[id].validation),
+                touched: true 
+            })
+        });
         this.setState({
             orderForm: updatedOrderForm,
-            formIsValid: formValidity
+            formIsValid: checkFormValidity(updatedOrderForm)
         });
      }
 
-     checkInputValidity = (value, rules) => {
-        const clearedValue = value.replace(/ /g,'');;
-        if (rules.required && clearedValue === '') {
-            return false
-        }
-        if (rules.maxLength && clearedValue.length > rules.maxLength) {
-            return false
-        }
-        if (rules.minLength && clearedValue.length < rules.minLength) {
-            return false
-        }
-        return true;
-     }
-
-     checkFormValidity = (form) => {
-         for(let key in form){
-             if(!form[key].valid){
-                 return false;
-             };
-         }
-         return true;
-     }
-
-     postOrderHandler = (event) => {
+    postOrderHandler = (event) => {
         event.preventDefault();
         // get the form data
         let formData = {};
@@ -165,12 +139,11 @@ class ContactDetails extends Component {
             formData: formData
         }
         this.props.purchaseBurger(order, this.props.history.push, this.props.token);
-     }
+    }
 
-
-     cancelOrderHandler = () => {
+    cancelOrderHandler = () => {
         this.props.history.replace('/');
-     }
+    }
 
     render() { 
         // transform the orderForm config onject into array

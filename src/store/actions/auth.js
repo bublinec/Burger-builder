@@ -73,7 +73,6 @@ export const auth = (email, password, isSignup, push, authRedirectUrl) => {
     }
 }
 
-
 export const tryAutoLogin = () => {
     return dispatch => {
         const token = localStorage.getItem('token');    

@@ -1,5 +1,5 @@
 import * as actionTypes from '../actions/actionTypes';
-import { updateObject } from '../utilities';
+import { updateObject } from '../../shared/utilities';
 
 // saving also error, although not using it (can be useful in the future)
 const initialState = { 

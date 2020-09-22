@@ -5,6 +5,7 @@ import Button from '../components/UI/Button';
 import Input from '../components/UI/Input';
 import Spinner from '../components/UI/Spinner';
 import * as actions from '../store/actions';
+import { checkInputValidity, checkFormValidity, updateObject } from '../shared/utilities';
 
 const FormDiv = styled.div`
   margin: 40px auto;
@@ -51,46 +52,20 @@ class Auth extends Component {
      }
 
      inputChangedHandler = (event, id) => {
-        // deep clone 
-        const updatedForm = {
-             ...this.state.controls
-        };
-        const updatedFormElement = {
-            ...updatedForm[id]
-        };
-        updatedFormElement.value = event.target.value;
-        updatedFormElement.valid = this.checkInputValidity(updatedFormElement.value, updatedFormElement.validation);
-        updatedFormElement.touched = true;
-        updatedForm[id] = updatedFormElement;
-        const formValidity = this.checkFormValidity(updatedForm);
+        const form = this.state.controls;
+        const updatedAuthForm = updateObject(form, {
+            [id]: updateObject(form[id], {
+                value: event.target.value,
+                valid: checkInputValidity(event.target.value, form[id].validation),
+                touched: true 
+            })
+        });
         this.setState({
-            controls: updatedForm,
-            formIsValid: formValidity
+            controls: updatedAuthForm,
+            formIsValid: checkFormValidity(updatedAuthForm)
         });
      }
 
-     checkInputValidity = (value, rules) => {
-        const clearedValue = value.replace(/ /g,'');;
-        if (rules.required && clearedValue === '') {
-            return false
-        }
-        if (rules.maxLength && clearedValue.length > rules.maxLength) {
-            return false
-        }
-        if (rules.minLength && clearedValue.length < rules.minLength) {
-            return false
-        }
-        return true;
-     }
-
-     checkFormValidity = (form) => {
-        for(let key in form){
-            if(!form[key].valid){
-                return false;
-            };
-        }
-        return true;
-    }
 
     loginSubmitHandler = (event) => {
         event.preventDefault();

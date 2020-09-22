@@ -12,7 +12,7 @@ import Spinner from '../components/UI/Spinner';
 // actions
 import * as actions from '../store/actions/index';
 
-class BurgerBuilder extends Component{
+export class BurgerBuilder extends Component{
     // local state for UI
     state = {
         purchasing: false,
